@@ -146,17 +146,16 @@ tiempos <- seq(0, days ,length = days*2+1)
 source("ModeloMigracion_M6.R")
 t1 <- Sys.time()
 sim1 <- X_theta(theta, tiempos, X_ini)
-sim2 <- X_theta(theta, tiempos, X_ini=sim1[nrow(sim1),-1])
-sim3 <- X_theta(theta, tiempos, X_ini=sim2[nrow(sim2),-1])
+sim2 <- X_theta(theta, tiempos, X_ini= unlist(sim1[nrow(sim1),-1]))
+sim3 <- X_theta(theta, tiempos, X_ini= unlist(sim2[nrow(sim2),-1]))
 t2 <- Sys.time()
 print("Tiempo ------------------------")
 print(t2 - t1)
 
-a <- cbind(sim2[,1] + 100,sim2[,-1])
-a <- a[-1,]
-b <- cbind(sim3[,1] + 200,sim2[,-1])
-b <- b[-1,]
-sim <- rbind(sim1,a,b)
+a <- cbind(sim2[,1] + 150*2 + 2,sim2[,-1])
+b <- cbind(sim3[,1] + 300*2 + 2,sim2[,-1])
+colnames(a) <- colnames(b) <- colnames(sim1)
+sim <- rbind(sim1, a, b)
 
 write.csv(sim, file=paste0('sim_450', 'dias.csv'), row.names = FALSE)
 matplot(sim[,1],sim[,-1],t="l")
