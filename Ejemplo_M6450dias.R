@@ -137,19 +137,27 @@ names(X_ini) <- np  #El orden es super importante
 
 # TIEMPO  ########################################
 
-days <- 220
+days <- 150
 print("days                          **********************")
-print(days)
 tiempos <- seq(0, days ,length = days*2+1)
 
 
 # CORRIENDO Y GRAFICANDO  ########################
 source("ModeloMigracion_M6.R")
 t1 <- Sys.time()
-sim<-X_theta(theta, tiempos, X_ini)
+sim1 <- X_theta(theta, tiempos, X_ini)
+sim2 <- X_theta(theta, tiempos, X_ini=sim1[nrow(sim1),-1])
+sim3 <- X_theta(theta, tiempos, X_ini=sim2[nrow(sim2),-1])
 t2 <- Sys.time()
 print("Tiempo ------------------------")
 print(t2 - t1)
+
+a <- cbind(sim2[,1] + 100,sim2[,-1])
+a <- a[-1,]
+b <- cbind(sim3[,1] + 200,sim2[,-1])
+b <- b[-1,]
+sim <- rbind(sim1,a,b)
+
 write.csv(sim, file=paste0('sim_',days, 'dias.csv'), row.names = FALSE)
 matplot(sim[,1],sim[,-1],t="l")
 
