@@ -138,6 +138,7 @@ names(X_ini) <- np  #El orden es super importante
 # TIEMPO  ########################################
 
 days <- 365
+print("days                          **********************")
 tiempos <- seq(0, days ,length = days*2+1)
 
 
