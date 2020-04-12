@@ -195,7 +195,7 @@ N2_i <- 770:801
 N3_i <- 802:833
 
 # Total de cada compartimento
-pdf(file =paste0("Total_Compartimento_", days, ".pdf"))
+pdf(file =paste0("Total_Compartimento_220_mas_100", ".pdf"))
 matplot(sim[,1],rowSums(sim[,S1_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles, GE 1")
 matplot(sim[,1],rowSums(sim[,S2_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles, GE 2")
 matplot(sim[,1],rowSums(sim[,S3_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles, GE 3")
@@ -228,7 +228,7 @@ dev.off()
 
 
 # Compartimento por cada estado
-pdf(file = paste0("Compartimento_Estado_", days, ".pdf"))
+pdf(file = paste0("Compartimento_Estado_220_mas_100", ".pdf"))
 matplot(sim[,1],sim[,S1_i]+sim[,S2_i]+sim[,S3_i],t="l",xlab="Dias",ylab="Poblacion", main="Susceptibles")
 matplot(sim[,1],sim[,E1_i]+sim[,E2_i]+sim[,E3_i],t="l",xlab="Dias",ylab="Poblacion", main="Expuestos")
 matplot(sim[,1],sim[,I1_1_i]+sim[,I2_1_i]+sim[,I3_1_i],t="l",xlab="Dias",ylab="Poblacion", main="Infecciosos Asintomaticos")
