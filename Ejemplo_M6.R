@@ -1,6 +1,7 @@
 #Este es un ejemplo para obtener las curvas basadas en el modelo epidemiologgico en ModeloMigracion.R
 library(deSolve)
-
+path <- "C:/Users/fou-f/Desktop/CIMAT"
+setwd(path)
 #Todas las tasas en el modelo se consideran diarias.
 
 # PARAMETROS  ####################################
@@ -88,10 +89,10 @@ N_subnet<- read.csv("grupo_pob_nacional_entidad.csv")
 N_subnet_grupo<-cbind(N_subnet[,4], N_subnet[,8]-N_subnet[,4]-N_subnet[,7],N_subnet[,7])
 # Los grupos de edad son [0,4],[5,59] y [60,+]
 
-dd<-as.Date(datos$fecha_corte,format="%Y-%m-%d")
+dd <- as.Date(datos$fecha_corte, format="%d/%m/%Y") # CHECAR EL FORMATO DE LA FECHA
 GrupoEdad<-cut(datos$edad,breaks=c(0,4,59,120), include.lowes=TRUE, label=FALSE)
 tt<-table(factor(datos$ent[dd<="2020-03-08"],levels=1:32),factor(GrupoEdad[dd<="2020-03-08"],levels=1:3))
-NumCasos<-as.matrix(tt)
+(NumCasos<-as.matrix(tt))
 
 NumCasos_No_Obs<-0.85/.15*NumCasos # Carlos  (considerando los asintomáticos y los leves no se observan)
 NumCasos_Total<-NumCasos+NumCasos_No_Obs #todos
@@ -134,8 +135,8 @@ names(X_ini) <- np  #El orden es super importante
 
 # TIEMPO  ########################################
 
-days<-40
-tiempos <- seq(0, days ,length = days+1)
+days <- 10
+tiempos <- seq(0, days ,length = days*2+1)
 
 
 # CORRIENDO Y GRAFICANDO  ########################
@@ -144,11 +145,11 @@ t1 <- Sys.time()
 sim<-X_theta(theta, tiempos, X_ini)
 t2 <- Sys.time()
 t2 - t1
-write.csv(sim, file='sim_20dias.csv', row.names = FALSE)
+write.csv(sim, file=paste0('sim_',days, 'dias.csv'), row.names = FALSE)
 matplot(sim[,1],sim[,-1],t="l")
 
-ii<-2
-sum(sim[ii,-c(1,grep("y",colnames(sim)))]) #debe sumar 1
+#ii<-2
+#sum(sim[ii,-c(1,grep("y",colnames(sim)))]) #debe sumar 1
 
 # indices para cada compatimento
 S1_i <-2:33
@@ -183,8 +184,7 @@ N2_i <- 770:801
 N3_i <- 802:833
 
 # Total de cada compartimento
-getwd()
-pdf(file ="Total_Compartimento.pdf")
+pdf(file =paste0("Total_Compartimento_", days, ".pdf"))
 matplot(sim[,1],rowSums(sim[,S1_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles, GE 1")
 matplot(sim[,1],rowSums(sim[,S2_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles, GE 2")
 matplot(sim[,1],rowSums(sim[,S3_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles, GE 3")
@@ -217,83 +217,13 @@ dev.off()
 
 
 # Compartimento por cada estado
-#pdf(file ="Compartimento_Estado.pdf")
-matplot(sim[,1],sim[,S_i],t="l",xlab="Dias",ylab="Poblacion", main="Susceptibles")
-matplot(sim[,1],sim[,e_i],t="l",xlab="Dias",ylab="Poblacion", main="Expuestos")
-matplot(sim[,1],sim[,ia_i],t="l",xlab="Dias",ylab="Poblacion", main="Infecciosos Asintomaticos")
-matplot(sim[,1],sim[,is_i],t="l",xlab="Dias",ylab="Poblacion", main= "Infecciosos Sintomaticos")
-matplot(sim[,1],sim[,r_i],t="l",xlab="Dias",ylab="Poblacion", main="Removidos")
-matplot(sim[,1],sim[,y_i],t="l",xlab="Dias",ylab="Poblacion", main="Acumulado de nuevos Infecciosos Sintomaticos")
-#dev.off()
-
-# Estado particular
-cdmx_i<-(6*7+2):(6*7+7)
-head(sim[,cdmx_i])
-matplot(sim[,1],sim[,cdmx_i],t="l")
-#matplot(sim[,1],sim[,cdmx_i],t="l",ylim=c(0,0.002))
-legend("bottomright",legend= colnames(sim[,cdmx_i]),lty=1:6, col=1:6)
-
-names(X_ini)
-sum(X_ini[-sort(c(grep("Y",names(X_ini)),grep("N",names(X_ini))))])
-#[1] 114460489
-sum(X_ini[grep("N",names(X_ini))])
-#[1] 114460489
-sum(N_subnet)
-#[1] 114460489
-
-ii<-51
-sum(sim[ii,-sort(c(1,grep("Y",colnames(sim)),grep("N",colnames(sim))))])
-
-
-
-
-
-
-
-
-
-
-
-#########################################################################################
-
-#Ejemplo de como como obtener la curva epidemiolgocia con 1 punto de cambio para beta
-
-
-days<-80
-t_cambio<-50
-
-sim1<-X_theta_4(theta, seq(0, t_cambio,length = t_cambio+1), X_ini)
-
-theta[grep("bet",names(theta))]<-bet/2  #diminuye a la mitad la transmisibilidad
-
-sim2<-X_theta_4(theta, seq(0, days-t_cambio,length = days-t_cambio), X_ini=sim1[nrow(sim1),-1])
-
-sim<-rbind(sim1,cbind(sim2[,1]+t_cambio+1,sim2[,-1]))
-
-
-pdf(file ="Total_Compartimento_TiempoCambio.pdf")
-matplot(sim[,1],rowSums(sim[,s_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="T Susceptibles")
-matplot(sim[,1],rowSums(sim[,e_i]),t="l", col=2, xlab="Dias",ylab="Poblacion", main="T Expuestos")
-matplot(sim[,1],rowSums(sim[,ia_i]),t="l", col=3,xlab="Dias",ylab="Poblacion", main="T Infecciosos Sintomaticos")
-matplot(sim[,1],rowSums(sim[,is_i]),t="l", col=4,xlab="Dias",ylab="Poblacion", main= "T Infecciosos Asintomaticos")
-matplot(sim[,1],rowSums(sim[,r_i]),t="l", col=5,xlab="Dias",ylab="Poblacion", main="T Removidos")
-matplot(sim[,1],rowSums(sim[,y_i]),t="l", col=6,xlab="Dias",ylab="Poblacion", main="T Acumulado de nuevos Infecciosos Sintomaticos")
-dev.off()
-
-# Compartimento por cada estado
-pdf(file ="Compartimento_Estado_TiempoCambio.pdf")
+pdf(file = paste0("Compartimento_Estado_", days, ".pdf"))
 matplot(sim[,1],sim[,S1_i]+sim[,S2_i]+sim[,S3_i],t="l",xlab="Dias",ylab="Poblacion", main="Susceptibles")
 matplot(sim[,1],sim[,E1_i]+sim[,E2_i]+sim[,E3_i],t="l",xlab="Dias",ylab="Poblacion", main="Expuestos")
-matplot(sim[,1],sim[,I1_1_i]+sim[,I1_2_i]+sim[,I1_3_i]+sim[,I1_4_i]+sim[,I2_1_i]+sim[,I2_2_i]+sim[,I2_3_i]+sim[,I2_4_i]+sim[,I3_1_i]+sim[,I3_2_i]+sim[,I3_3_i]+sim[,I3_4_i],t="l",xlab="Dias",ylab="Poblacion", main="Infecciosos")
-matplot(sim[,1],sim[,D_i],t="l",xlab="Dias",ylab="Poblacion", main="Defunciones")
+matplot(sim[,1],sim[,I1_1_i]+sim[,I2_1_i]+sim[,I3_1_i],t="l",xlab="Dias",ylab="Poblacion", main="Infecciosos Asintomaticos")
+matplot(sim[,1],sim[,I1_2_i]+sim[,I2_2_i]+sim[,I3_2_i],t="l",xlab="Dias",ylab="Poblacion", main= "Infecciosos Leves")
+matplot(sim[,1],sim[,I1_3_i]+sim[,I2_3_i]+sim[,I3_3_i],t="l",xlab="Dias",ylab="Poblacion", main= "Infecciosos Hop")
+matplot(sim[,1],sim[,I1_4_i]+sim[,I2_4_i]+sim[,I3_4_i],t="l",xlab="Dias",ylab="Poblacion", main= "Infecciosos CI")
 matplot(sim[,1],sim[,R_i],t="l",xlab="Dias",ylab="Poblacion", main="Removidos")
-matplot(sim[,1],sim[,Y1_i]+sim[,Y2_i]+sim[,Y3_i],t="l",xlab="Dias",ylab="Poblacion", main="Acumulado de nuevos Infecciosos")
+matplot(sim[,1],sim[,Y1_i]+sim[,Y2_i]+sim[,Y3_i],t="l",xlab="Dias",ylab="Poblacion", main="Acumulado de Y´s")
 dev.off()
-
-
-
-
-
-
-
-
