@@ -146,7 +146,7 @@ tiempos <- seq(0, days ,length = days*2+1)
 # CORRIENDO Y GRAFICANDO  ########################
 source("ModeloMigracion_M6.R")
 t1 <- Sys.time()
-sim<-X_theta(theta, tiempos, X_ini= sim_220[ nrow(sim_220),-1])
+sim<-X_theta(theta, tiempos, X_ini= unlist(sim_220[ nrow(sim_220),-1]))
 t2 <- Sys.time()
 print("Tiempo ------------------------")
 print(t2 - t1)
