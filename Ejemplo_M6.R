@@ -1,6 +1,8 @@
 #Este es un ejemplo para obtener las curvas basadas en el modelo epidemiologgico en ModeloMigracion.R
 library(deSolve)
-path <- "C:/Users/fou-f/Desktop/CIMAT"
+print("Corriendo en server CIMAT")
+#path <- "C:/Users/fou-f/Desktop/CIMAT"
+path <- "/home/josegarcia/COVIDServer/"
 setwd(path)
 #Todas las tasas en el modelo se consideran diarias.
 
@@ -135,7 +137,7 @@ names(X_ini) <- np  #El orden es super importante
 
 # TIEMPO  ########################################
 
-days <- 10
+days <- 150
 tiempos <- seq(0, days ,length = days*2+1)
 
 
@@ -144,7 +146,8 @@ source("ModeloMigracion_M6.R")
 t1 <- Sys.time()
 sim<-X_theta(theta, tiempos, X_ini)
 t2 <- Sys.time()
-t2 - t1
+print("Tiempo ------------------------")
+print(t2 - t1)
 write.csv(sim, file=paste0('sim_',days, 'dias.csv'), row.names = FALSE)
 matplot(sim[,1],sim[,-1],t="l")
 
