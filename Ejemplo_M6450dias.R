@@ -158,7 +158,7 @@ b <- cbind(sim3[,1] + 200,sim2[,-1])
 b <- b[-1,]
 sim <- rbind(sim1,a,b)
 
-write.csv(sim, file=paste0('sim_',days, 'dias.csv'), row.names = FALSE)
+write.csv(sim, file=paste0('sim_450', 'dias.csv'), row.names = FALSE)
 matplot(sim[,1],sim[,-1],t="l")
 
 #ii<-2

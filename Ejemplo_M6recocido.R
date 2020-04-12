@@ -156,7 +156,7 @@ res <- rbind(sim_220, a)
 
 
 sim <- res
-write.csv(sim , file=paste0('sim_',days, 'dias.csv'), row.names = FALSE)
+write.csv(sim , file=paste0('sim_220_mas_100', 'dias.csv'), row.names = FALSE)
 matplot(sim[,1],sim[,-1],t="l")
 
 #ii<-2
