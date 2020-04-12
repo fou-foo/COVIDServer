@@ -140,7 +140,7 @@ names(X_ini) <- np  #El orden es super importante
 days <- 260
 print("days                          **********************")
 print(days)
-tiempos <- seq(0, days ,length = days*2+1)
+tiempos <- seq(0, days ,length = days+1)
 
 
 # CORRIENDO Y GRAFICANDO  ########################

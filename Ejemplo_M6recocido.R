@@ -140,7 +140,7 @@ names(X_ini) <- np  #El orden es super importante
 days <- 5
 print("days                          **********************")
 print(days)
-tiempos <- seq(0, days ,length = days*2+1)
+tiempos <- seq(0, days ,length = days+1)
 
 
 # CORRIENDO Y GRAFICANDO  ########################
@@ -151,7 +151,7 @@ t2 <- Sys.time()
 print("Tiempo ------------------------")
 print(t2 - t1)
 
-a <- cbind(sim[, 1] + 220*2+2 , sim[, -1])
+a <- cbind(sim[, 1] + 220 , sim[, -1])
 colnames(a) <- colnames(sim_220)
 res <- rbind(sim_220, a)
 

@@ -152,8 +152,8 @@ t2 <- Sys.time()
 print("Tiempo ------------------------")
 print(t2 - t1)
 
-a <- cbind(sim2[,1] + 150*2 + 2,sim2[,-1])
-b <- cbind(sim3[,1] + 300*2 + 2,sim2[,-1])
+a <- cbind(sim2[,1] + 150,sim2[,-1])
+b <- cbind(sim3[,1] + 300,sim2[,-1])
 colnames(a) <- colnames(b) <- colnames(sim1)
 sim <- rbind(sim1, a, b)
 
