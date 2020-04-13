@@ -3,7 +3,8 @@ library(deSolve)
 print("Corriendo en server CIMAT")
 #path <- "C:/Users/fou-f/Desktop/CIMAT"
 path <- "/home/josegarcia/COVIDServer/Ejecucion300nuevosrceros/"
-
+setwd(path)
+print(getwd())
 #Todas las tasas en el modelo se consideran diarias.
 
 # PARAMETROS  ####################################
@@ -140,7 +141,7 @@ names(theta)<-nt  #solo para asegurarme
 sim2<-X_theta(theta, tiempos, X_ini=sim1[dim(sim1)[1],-1])
 
 #################################
-days <- 20
+days <- 10
 tiempos <- seq(0, days ,length = days+1)
 #modificamos la conectividad
 theta[grep('ji',names(theta))]<-0.7*theta[grep('ji',names(theta))]
