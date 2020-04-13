@@ -141,7 +141,7 @@ names(theta)<-nt  #solo para asegurarme
 sim2<-X_theta(theta, tiempos, X_ini=sim1[dim(sim1)[1],-1])
 
 #################################
-days <- 300
+days <- 365
 tiempos <- seq(0, days ,length = days+1)
 #modificamos la conectividad
 theta[grep('ji',names(theta))]<-0.7*theta[grep('ji',names(theta))]
