@@ -156,6 +156,7 @@ print(t2 - t1)
 
 sim<-rbind(sim1,cbind(sim2[,1]+9,sim2[,-1]),cbind(sim3[,1]+15,sim3[,-1]))
 
+write.csv(sim, file=paste0('sim_',days, 'dias.csv'), row.names = FALSE)
 
 ### Graficas
 #indices para cada compatimento
