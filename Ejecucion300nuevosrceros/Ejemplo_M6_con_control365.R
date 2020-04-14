@@ -197,21 +197,29 @@ pdf(file =paste0("Total_Compartimento_controlado", days, ".pdf"))
 matplot(sim[,1],rowSums(sim[,S1_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles, GE 1")
 matplot(sim[,1],rowSums(sim[,S2_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles, GE 2")
 matplot(sim[,1],rowSums(sim[,S3_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles, GE 3")
-matplot(sim[,1],rowSums(sim[,c(S1_i,S2_i,S3_i)]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles")
+matplot(sim[,1],rowSums(sim[,c(S1_i,S2_i,S3_i)]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Susceptibles (s1+s2+s3")
 
 matplot(sim[,1],rowSums(sim[,E1_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Expuestos, GE 1")
 matplot(sim[,1],rowSums(sim[,E2_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Expuestos, GE 2")
 matplot(sim[,1],rowSums(sim[,E3_i]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Expuestos, GE 3")
 matplot(sim[,1],rowSums(sim[,c(E1_i,E2_i,E3_i)]),t="l", col=1, xlab="Dias",ylab="Poblacion", main="Expuestos")
+
 matplot(sim[,1],rowSums(sim[,c(I1_1_i,I2_1_i,I3_1_i)]),t="l", col=3,xlab="Dias",ylab="Poblacion", main="Inf. Asintomaticos")
-matplot(sim[,1],rowSums(sim[,c(I1_2_i,I2_2_i,I3_2_i)]),t="l", col=3,xlab="Dias",ylab="Poblacion", main="Inf. Leves")
+
+lines(sim[,1],rowSums(sim[,c(I1_2_i,I2_2_i,I3_2_i)]),t="l", col='red',xlab="Dias",ylab="Poblacion", main="Inf. Leves")
+
 matplot(sim[,1],rowSums(sim[,c(I1_3_i,I2_3_i,I3_3_i)]),t="l", col=3,xlab="Dias",ylab="Poblacion", main="Inf. Hosp")
+
 matplot(sim[,1],rowSums(sim[,c(I1_4_i,I2_4_i,I3_4_i)]),t="l", col=3,xlab="Dias",ylab="Poblacion", main="Inf. UCI")
+
 matplot(sim[,1],rowSums(sim[,sort(c(I1_1_i,I2_1_i,I3_1_i,I1_2_i,I2_2_i,I3_2_i,I1_3_i,I2_3_i,I3_3_i, I1_4_i, I2_4_i,I3_4_i))]),t="l", col=3,xlab="Dias", ylab="Poblacion", main="Total de Infeccioso")
+
 matplot(sim[,1],rowSums(sim[,D_i]),t="l", xlab="Dias",ylab="Poblacion",
         main="Defunciones")
 matplot(sim[,1],rowSums(sim[,R_i]),t="l", xlab="Dias",ylab="Poblacion",
         main="Removidos")
+
+
 matplot(sim[,1],rowSums(sim[,Y1_i]),t="l", xlab="Dias",ylab="Poblacion",
         main="Acumulado de I_3+I_4s, GE 1")
 matplot(sim[,1],rowSums(sim[,Y2_i]),t="l", xlab="Dias",ylab="Poblacion",
