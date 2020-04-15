@@ -1,8 +1,8 @@
 #Este es un ejemplo para obtener las curvas basadas en el modelo epidemiologgico en ModeloMigracion.R
 library(deSolve)
 print("Corriendo en server CIMAT")
-path <- "~/Desktop/COVIDServer/Ejecucion14abril2020"
-#path <- "/home/josegarcia/COVIDServer/Ejecucion14abril2020"
+#path <- "~/Desktop/COVIDServer/Ejecucion14abril2020"
+path <- "/home/josegarcia/COVIDServer/Ejecucion14abril2020"
 setwd(path)
 #Todas las tasas en el modelo se consideran diarias.
 
@@ -82,7 +82,7 @@ N_subnet_grupo<-cbind(N_subnet[,4], N_subnet[,8]-N_subnet[,4]-N_subnet[,7],N_sub
 dd<-as.Date(datos$fecha_corte,format="%Y-%m-%d") #CHECAR FORMATO DE FECHA
 GrupoEdad<-cut(datos$edad,breaks=c(0,4,59,120), include.lowes=TRUE, label=FALSE)
 tt<-table(factor(datos$ent[dd<="2020-03-08"],levels=1:32),factor(GrupoEdad[dd<="2020-03-08"],levels=1:3))
-NumCasos<-as.matrix(tt)
+(NumCasos<-as.matrix(tt))
 
 
 NumCasos_No_Obs<-0.85/.15*NumCasos # Carlos  (considerando los asintomáticos y los leves no se observan)
