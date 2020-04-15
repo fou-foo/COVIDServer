@@ -152,6 +152,7 @@ print(days)
 tiempos <- seq(0, days ,length = days+1)
 t1 <- Sys.time()
 sim<-X_theta(theta, tiempos, X_ini)
+t2 <- Sys.time()
 
 print("Tiempo ------------------------")
 print(t2 - t1)
