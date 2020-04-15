@@ -2,7 +2,7 @@
 library(deSolve)
 print("Corriendo en server CIMAT")
 #path <- "~/Desktop/COVIDServer/Ejecucion14abril2020"
-path <- "/home/josegarcia/COVIDServer/Ejecucion14abril2020"
+path <- "/home/josegarcia/COVIDServer/Ejecucion14abril2"
 setwd(path)
 #Todas las tasas en el modelo se consideran diarias.
 
