@@ -1,8 +1,8 @@
 #Este es un ejemplo para obtener las curvas basadas en el modelo epidemiologgico en ModeloMigracion.R
 library(deSolve)
 print("Corriendo en server CIMAT")
-#path <- "C:/Users/fou-f/Desktop/CIMAT"
-path <- "/home/josegarcia/COVIDServer/"
+path <- "~/Desktop/COVIDServer/Ejecucion14abril2020"
+#path <- "/home/josegarcia/COVIDServer/Ejecucion14abril2020"
 setwd(path)
 #Todas las tasas en el modelo se consideran diarias.
 
