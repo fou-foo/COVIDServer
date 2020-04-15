@@ -146,7 +146,7 @@ theta['EI']<-EI
 
 # CORRIENDO Y GRAFICANDO  ########################
 source("ModeloMigracion_M6_cont_15_09_omega.R")
-days <- 5
+days <- 300
 print("days                          **********************")
 print(days)
 tiempos <- seq(0, days ,length = days+1)
